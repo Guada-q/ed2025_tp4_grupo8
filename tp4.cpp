@@ -1,0 +1,31 @@
+#include <iostream>
+#include <stack>
+#include <queue>
+using namespace std;
+
+// Clase base Libro
+class Libro {
+protected:
+    string titulo;
+    string autor;
+    string ISBN;
+    bool prestado;
+
+public:
+    Libro() {}
+
+    Libro(string t, string a, string i) {
+        titulo = t;
+        autor = a;
+        ISBN = i;
+        prestado = false;
+    }
+
+    string getTitulo() { return titulo; }
+    string getAutor() { return autor; }
+    string getISBN() { return ISBN; }
+    bool estaPrestado() { return prestado; }
+
+    void prestar() { prestado = true; }
+    void devolver() { prestado = false; }
+};
