@@ -103,15 +103,41 @@ public:
     }
 
     void buscarLibro(string isbn) {
-        if (isbn == libro1.getISBN()) {
-            cout << "Encontrado: " << libro1.getTitulo() << ", Autor: " << libro1.getAutor() << endl;
+        if (isbn==libro1.getISBN()) {
+            cout<<"Encontrado: "<<libro1.getTitulo()<<",Autor: "<<libro1.getAutor()<<endl;
         } else {
-            if (isbn == libro2.getISBN()) {
-                cout << "Encontrado: " << libro2.getTitulo() << ", Autor: " << libro2.getAutor();
-                cout << ", URL: " << libro2.getURL() << endl;
+            if (isbn==libro2.getISBN()) {
+                cout<<"Encontrado: "<< libro2.getTitulo()<<", Autor: "<<libro2.getAutor();
+                cout<<", URL: "<<libro2.getURL()<<endl;
             } else {
-                cout << "Libro no encontrado." << endl;
+                cout<<"Libro no encontrado."<<endl;
             }
         }
     }
-    
+
+void prestarLibro(string isbn, int idUsuario){
+        Libro* libro = nullptr;
+        if (isbn==libro1.getISBN())libro=&libro1;
+        if (isbn==libro2.getISBN())libro=&libro2;
+
+        Usuario*usuario=nullptr;
+        if (idUsuario==usuario1.getID())usuario=&usuario1;
+        if (idUsuario==usuario2.getID())usuario=&usuario2;
+
+        if (libro==nullptr) {
+            cout<<"Libro no encontrado."<<endl;
+        } else {
+            if (usuario==nullptr){
+                cout<<"Usuario no encontrado."<<endl;
+            } else {
+                if(!libro->estaPrestado()) {
+                    libro->prestar();
+                    usuario->agregarHistorial(*libro);
+                    cout<<"Libro prestado con exito a "<<usuario->getNombre()<<"."<<endl;
+                } else {
+                    cout<<"Libro no disponible, usuario agregado a la lista de espera." << endl;
+                    espera.push(*usuario);
+                }
+            }
+        }
+    }
