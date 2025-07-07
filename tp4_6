@@ -1,0 +1,22 @@
+
+    void devolverLibro(string isbn) {
+        Libro* libro = nullptr;
+        if (isbn == libro1.getISBN()) libro = &libro1;
+        if (isbn == libro2.getISBN()) libro = &libro2;
+
+        if (libro == nullptr || !libro->estaPrestado()) {
+            cout << "Libro no encontrado o no prestado." << endl;
+        } else {
+            libro->devolver();
+            cout << "Libro devuelto." << endl;
+
+            if (!espera.empty()) {
+                Usuario siguiente = espera.front();
+                espera.pop();
+                siguiente.agregarHistorial(*libro);
+                libro->prestar();
+                cout << "Libro prestado al siguiente en espera: " << siguiente.getNombre() << endl;
+            }
+        }
+    }
+};
