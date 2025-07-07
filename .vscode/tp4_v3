@@ -1,0 +1,117 @@
+#include <iostream>
+#include <stack>
+#include <queue>
+using namespace std;
+
+// Clase base Libro
+class Libro {
+protected:
+    string titulo;
+    string autor;
+    string ISBN;
+    bool prestado;
+
+public:
+    Libro() {}
+
+    Libro(string t, string a, string i) {
+        titulo = t;
+        autor = a;
+        ISBN = i;
+        prestado = false;
+    }
+
+    string getTitulo() { return titulo; }
+    string getAutor() { return autor; }
+    string getISBN() { return ISBN; }
+    bool estaPrestado() { return prestado; }
+
+    void prestar() { prestado = true; }
+    void devolver() { prestado = false; }
+};
+// Clase derivada LibroDigital
+class LibroDigital:public Libro{
+private:
+    string url;
+
+public:
+
+    LibroDigital(){}
+    
+    LibroDigital(string t, string a, string i, string u) : Libro(t, a, i) {
+        url=u;
+    }
+    string getURL(){return url;}
+};
+// Clase Usuario
+class Usuario {
+private:
+    string nombre;
+    int id;
+    stack<Libro> historial;
+
+public:
+    Usuario() {}
+
+    Usuario(string n, int i) {
+        nombre = n;
+        id = i;
+    }
+
+    string getNombre() { return nombre; }
+    int getID() { return id; }
+
+    void agregarHistorial(Libro libro) {
+        historial.push(libro);
+    }
+
+    void mostrarHistorial() {
+        stack<Libro> copia = historial;
+        cout << "Historial de " << nombre << ":" << endl;
+        while (!copia.empty()) {
+            cout << "- " << copia.top().getTitulo() << endl;
+            copia.pop();
+        }
+    }
+};
+
+
+
+// Clase Biblioteca
+class Biblioteca {
+private:
+    Libro libro1 = Libro("1984", "George Orwell", "A123");
+    LibroDigital libro2 = LibroDigital("El Principito", "Antoine de Saint-Exupery", "B456", "www.principito.com");
+    Usuario usuario1;
+    Usuario usuario2;
+    queue<Usuario> espera;
+
+public:
+    void registrarUsuario(int num) {
+        string nombre;
+        int id;
+        cout << "Ingrese nombre del usuario: ";
+        cin >> nombre;
+        cout << "Ingrese ID del usuario: ";
+        cin >> id;
+        if (num == 1) {
+            usuario1 = Usuario(nombre, id);
+        } else {
+            usuario2 = Usuario(nombre, id);
+        }
+        cout << "Usuario registrado con exito." << endl;
+    }
+
+    void buscarLibro(string isbn) {
+        if (isbn == libro1.getISBN()) {
+            cout << "Encontrado: " << libro1.getTitulo() << ", Autor: " << libro1.getAutor() << endl;
+        } else {
+            if (isbn == libro2.getISBN()) {
+                cout << "Encontrado: " << libro2.getTitulo() << ", Autor: " << libro2.getAutor();
+                cout << ", URL: " << libro2.getURL() << endl;
+            } else {
+                cout << "Libro no encontrado." << endl;
+            }
+        }
+    }
+    

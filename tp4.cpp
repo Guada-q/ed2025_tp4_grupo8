@@ -29,3 +29,17 @@ public:
     void prestar() { prestado = true; }
     void devolver() { prestado = false; }
 };
+// Clase derivada LibroDigital
+class LibroDigital:public Libro{
+private:
+    string url;
+
+public:
+
+    LibroDigital(){}
+    
+    LibroDigital(string t, string a, string i, string u) : Libro(t, a, i) {
+        url=u;
+    }
+    string getURL(){return url;}
+};
